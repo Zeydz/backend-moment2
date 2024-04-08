@@ -33,6 +33,14 @@ app.get('/api', (req, res) => {
 /* Route för att hämta alla arbetserfarenheter */
 app.get('/api/work-experiences', (req, res) => {
     res.json({message: "Get all work experiences"});
+
+    client.query("SELECT * FROM workexperiences", (err, result) => {
+        if (err) {
+            res.status(500).json({message: "No work experiencese found."});
+        } else {
+            res.json(result);
+        }
+    })
 });
 
 /* Route för att hämta en specifik arbetserfarenhet */
