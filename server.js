@@ -32,21 +32,30 @@ app.get('/api', (req, res) => {
 
 /* Route för att hämta alla arbetserfarenheter */
 app.get('/api/work-experiences', (req, res) => {
-    res.json({message: "Get all work experiences"});
-
     client.query("SELECT * FROM workexperiences", (err, result) => {
         if (err) {
-            res.status(500).json({message: "No work experiencese found."});
+            res.status(500).json({message: "No work experiences found."});
         } else {
             res.json(result);
         }
-    })
+    });
 });
 
 /* Route för att hämta en specifik arbetserfarenhet */
 app.get('/api/work-experiences/:id', (req, res) => {
     const id = req.params.id;
-    res.json({ message: "Get work experience with id: " + id });
+
+    client.query("SELECT * FROM workexperiences WHERE id = $1", [id], (err, result) => {
+        if (err) {
+            res.status(500).json({message: "Error retrieving work experience."});
+        } else {
+            if (result.rows.length === 0) {
+                res.status(404).json({message: "No work experiences found for that specific ID."});
+            } else {
+                res.json(result.rows[0]);
+            }
+        }
+    });
 });
 
 /* Route för att lägga till en arbetserfarenhet */
