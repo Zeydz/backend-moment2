@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -44,7 +46,7 @@ app.get('/api/work-experiences', (req, res) => {
 /* Route för att hämta en specifik arbetserfarenhet */
 app.get('/api/work-experiences/:id', (req, res) => {
     const id = req.params.id;
-
+    /* SQL-Fråga som hämtar specifikt ID från databasen. */
     client.query("SELECT * FROM workexperiences WHERE id = $1", [id], (err, result) => {
         if (err) {
             res.status(500).json({ message: "Error retrieving work experience." });
@@ -99,7 +101,7 @@ app.put("/api/work-experiences/:id", (req, res) => {
 /* Route för att ta bort arbetserfarenhet */
 app.delete("/api/work-experiences/:id", (req, res) => {
     const id = req.params.id;
-
+    /* SQL-fråga som tar bort ID från databas */
     client.query("DELETE FROM workexperiences WHERE id = $1",
     [id],
     (err, result) => {
@@ -109,7 +111,7 @@ app.delete("/api/work-experiences/:id", (req, res) => {
         res.status(200).json ({ message: "Work experience deleted successfully. "})
     })
 });
-
+/* Startar & lyssnar på port */
 app.listen(port, () => {
     console.log('Server is running on port ' + port);
 })
