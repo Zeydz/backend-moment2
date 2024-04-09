@@ -82,14 +82,33 @@ app.post("/api/work-experiences", (req, res) => {
 /* Route för att ändra/uppdatera en arbetserfarenhet */
 app.put("/api/work-experiences/:id", (req, res) => {
     const id = req.params.id;
-    res.json({ message: "Work experience updated with id: " + id })
-})
+    const { companyname, jobtitle, location, startdate, enddate, description } = req.body;
+
+    /* Uppdatera i databasen */
+    client.query("UPDATE workexperiences SET companyname = $1, jobtitle = $2, location = $3, startdate = $4, enddate = $5, description = $6 WHERE id = $7",
+        [companyname, jobtitle, location, startdate, enddate, description, id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Error updating work experience." });
+            }
+            res.status(200).json({ message: "Work experience updated successfully." })
+        }
+    );
+});
 
 /* Route för att ta bort arbetserfarenhet */
-app.delete("/api/users/:id", (req, res) => {
-    res.json({ message: "Users deleted: " + req.params.id })
-})
+app.delete("/api/work-experiences/:id", (req, res) => {
+    const id = req.params.id;
 
+    client.query("DELETE FROM workexperiences WHERE id = $1",
+    [id],
+    (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: "Error deleting work experience."})
+        }
+        res.status(200).json ({ message: "Work experience deleted successfully. "})
+    })
+});
 
 app.listen(port, () => {
     console.log('Server is running on port ' + port);
