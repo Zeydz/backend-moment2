@@ -39,3 +39,8 @@ Här är ett exempel på hur du kan använda ThunderClient för att utföra CRUD
 2. För att lägga till en ny arbetserfarenhet, använd POST-förfrågan till `http://localhost:3000/api/work-experiences` i lämpligt format.
 3. För att uppdatera en befintlig arbetserfarenhet, använd PUT-förfrågan till `http://localhost:3000/api/work-experiences/:id` med arbetserfarenhetens ID och uppdaterad data.
 4. För att ta bort en arbetserfarenhet, använd DELETE-förfrågan till `http://localhost:3000/api/work-experiences/:id` med arbetserfarenhetens ID.
+
+[API-länk](https://backend-moment2.onrender.com/api)  
+
+[Publicerad webbplats](https://astonishing-caramel-f0eafd.netlify.app/)
+
